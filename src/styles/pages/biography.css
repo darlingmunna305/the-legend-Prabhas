@@ -1,0 +1,262 @@
+/* Biography Page Styles */
+.biography {
+  padding: 60px 40px;
+  max-width: 1400px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-in;
+}
+
+.bio-header {
+  text-align: center;
+  margin-bottom: 50px;
+  animation: slideInDown 0.6s ease-out;
+}
+
+.bio-header h1 {
+  margin-bottom: 10px;
+}
+
+.bio-header .tagline {
+  font-size: 1.3rem;
+  color: #d4af37;
+  font-style: italic;
+}
+
+.bio-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 40px;
+}
+
+.bio-sidebar {
+  animation: slideInLeft 0.6s ease-out;
+}
+
+.bio-card {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  border: 2px solid #d4af37;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+}
+
+.bio-card h3 {
+  color: #d4af37;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 15px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.info-item .label {
+  color: #d4af37;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.info-item .value {
+  color: #cccccc;
+  font-size: 0.95rem;
+}
+
+.language-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.language-tag {
+  display: inline-block;
+  background-color: rgba(212, 175, 55, 0.2);
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.language-tag:hover {
+  background-color: #d4af37;
+  color: #0a0a0a;
+  transform: scale(1.05);
+}
+
+.bio-main {
+  animation: slideInRight 0.6s ease-out;
+}
+
+.bio-section {
+  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+  border: 2px solid #d4af37;
+  border-radius: 10px;
+  padding: 30px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
+  transition: all 0.3s ease;
+}
+
+.bio-section:hover {
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.bio-section h2 {
+  margin-bottom: 20px;
+  color: #d4af37;
+  border-bottom: 2px solid #d4af37;
+  padding-bottom: 15px;
+}
+
+.bio-section p {
+  color: #cccccc;
+  line-height: 1.8;
+  margin-bottom: 15px;
+}
+
+.highlight-list {
+  list-style: none;
+  padding: 0;
+}
+
+.highlight-list li {
+  background-color: rgba(212, 175, 55, 0.05);
+  border-left: 4px solid #d4af37;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  color: #cccccc;
+  transition: all 0.3s ease;
+}
+
+.highlight-list li:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+  transform: translateX(10px);
+}
+
+.awards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.award-item {
+  background-color: rgba(212, 175, 55, 0.1);
+  border: 1px solid #d4af37;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.award-item:hover {
+  background-color: rgba(212, 175, 55, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
+}
+
+.award-year {
+  color: #d4af37;
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.award-name {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.award-category,
+.award-film {
+  color: #999999;
+  font-size: 0.9rem;
+}
+
+.personal-info h4 {
+  color: #d4af37;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .bio-container {
+    grid-template-columns: 1fr;
+  }
+
+  .bio-sidebar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .biography {
+    padding: 40px 20px;
+  }
+
+  .bio-card {
+    padding: 20px;
+  }
+
+  .award-item {
+    padding: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .biography {
+    padding: 20px 15px;
+  }
+
+  .bio-section {
+    padding: 20px;
+  }
+
+  .awards-grid {
+    grid-template-columns: 1fr;
+  }
+}
