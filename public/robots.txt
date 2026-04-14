@@ -1,0 +1,76 @@
+# robots.txt for The Legend Prabhas Website
+# Last Updated: April 14, 2026
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /.env
+Disallow: /*.json
+Disallow: /node_modules/
+Disallow: /dist/
+Disallow: /build/
+
+# Allow search engines to crawl specific important pages
+Allow: /
+Allow: /filmography
+Allow: /biography
+Allow: /gallery
+Allow: /news
+Allow: /reviews
+Allow: /premium
+Allow: /watch
+
+# Crawl delay - 1 second between requests
+Crawl-delay: 1
+
+# Request rate limit
+Request-rate: 1/1s
+
+# Sitemap location
+Sitemap: https://thelegendprabhas.com/sitemap.xml
+
+# Google Bot
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing Bot
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+# Allow all robots to index the website
+User-agent: *
+Allow: /
+
+# Specific rules for common search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+# Disallow crawling of sensitive areas
+Disallow: /api/
+Disallow: /.env
+Disallow: /config/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://www.thelegendprabhas.com/sitemap.xml
+
+# Crawl delay (in seconds)
+Crawl-delay: 1

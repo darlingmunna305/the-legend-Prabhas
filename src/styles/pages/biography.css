@@ -1,262 +1,132 @@
-/* Biography Page Styles */
+/* Biography Redesign */
 .biography {
-  padding: 60px 40px;
+  padding: 8rem 4rem 4rem;
   max-width: 1400px;
   margin: 0 auto;
-  animation: fadeIn 0.5s ease-in;
 }
 
 .bio-header {
   text-align: center;
-  margin-bottom: 50px;
-  animation: slideInDown 0.6s ease-out;
+  margin-bottom: 6rem;
 }
 
 .bio-header h1 {
-  margin-bottom: 10px;
+  font-size: 5rem;
+  margin: 0;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -2px;
 }
 
 .bio-header .tagline {
-  font-size: 1.3rem;
-  color: #d4af37;
-  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--text-secondary);
+  font-weight: 200;
+  letter-spacing: 10px;
+  text-transform: uppercase;
+  margin-top: 0.5rem;
 }
 
 .bio-container {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 40px;
+  grid-template-columns: 350px 1fr;
+  gap: 5rem;
 }
 
-.bio-sidebar {
-  animation: slideInLeft 0.6s ease-out;
+.bio-card-premium {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: var(--shadow-premium);
+  position: sticky;
+  top: 120px;
 }
 
-.bio-card {
-  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  border: 2px solid #d4af37;
-  border-radius: 10px;
-  padding: 25px;
-  margin-bottom: 25px;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-}
-
-.bio-card h3 {
-  color: #d4af37;
-  margin-bottom: 20px;
-  border-bottom: 2px solid #d4af37;
-  padding-bottom: 15px;
+.bio-card-premium h3 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: var(--primary-gold);
 }
 
 .info-item {
+  margin-bottom: 2rem;
+}
+
+.info-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.info-value {
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 500;
+}
+
+.bio-section-premium {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: 32px;
+  padding: 4rem;
+  margin-bottom: 4rem;
+  transition: var(--transition-smooth);
+}
+
+.bio-section-premium:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--primary-gold);
+}
+
+.bio-section-premium h2 {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  color: var(--primary-gold);
+}
+
+.bio-section-premium p {
+  font-size: 1.2rem;
+  line-height: 2;
+  color: var(--text-secondary);
+}
+
+.award-card-premium {
+  padding: 2rem;
+  background: rgba(212, 175, 55, 0.05);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
-  margin-bottom: 18px;
+  gap: 0.5rem;
+  transition: var(--transition-smooth);
 }
 
-.info-item .label {
-  color: #d4af37;
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 5px;
-}
-
-.info-item .value {
-  color: #cccccc;
-  font-size: 0.95rem;
-}
-
-.language-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.language-tag {
-  display: inline-block;
-  background-color: rgba(212, 175, 55, 0.2);
-  border: 1px solid #d4af37;
-  color: #d4af37;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
-}
-
-.language-tag:hover {
-  background-color: #d4af37;
-  color: #0a0a0a;
-  transform: scale(1.05);
-}
-
-.bio-main {
-  animation: slideInRight 0.6s ease-out;
-}
-
-.bio-section {
-  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  border: 2px solid #d4af37;
-  border-radius: 10px;
-  padding: 30px;
-  margin-bottom: 30px;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
-  transition: all 0.3s ease;
-}
-
-.bio-section:hover {
-  box-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
-}
-
-.bio-section h2 {
-  margin-bottom: 20px;
-  color: #d4af37;
-  border-bottom: 2px solid #d4af37;
-  padding-bottom: 15px;
-}
-
-.bio-section p {
-  color: #cccccc;
-  line-height: 1.8;
-  margin-bottom: 15px;
-}
-
-.highlight-list {
-  list-style: none;
-  padding: 0;
-}
-
-.highlight-list li {
-  background-color: rgba(212, 175, 55, 0.05);
-  border-left: 4px solid #d4af37;
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  color: #cccccc;
-  transition: all 0.3s ease;
-}
-
-.highlight-list li:hover {
-  background-color: rgba(212, 175, 55, 0.1);
-  transform: translateX(10px);
-}
-
-.awards-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-}
-
-.award-item {
-  background-color: rgba(212, 175, 55, 0.1);
-  border: 1px solid #d4af37;
-  border-radius: 8px;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-.award-item:hover {
-  background-color: rgba(212, 175, 55, 0.15);
+.award-card-premium:hover {
+  background: rgba(212, 175, 55, 0.1);
   transform: translateY(-5px);
-  box-shadow: 0 5px 20px rgba(212, 175, 55, 0.2);
+  border-color: var(--primary-gold);
 }
 
-.award-year {
-  color: #d4af37;
-  font-weight: 700;
-  font-size: 1.5rem;
-  margin-bottom: 10px;
+.award-year-gold {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-gold);
 }
 
-.award-name {
-  color: #ffffff;
-  font-weight: 600;
-  margin-bottom: 8px;
-}
-
-.award-category,
-.award-film {
-  color: #999999;
-  font-size: 0.9rem;
-}
-
-.personal-info h4 {
-  color: #d4af37;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Responsive */
 @media (max-width: 1024px) {
-  .bio-container {
-    grid-template-columns: 1fr;
-  }
-
-  .bio-sidebar {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
+  .bio-container { grid-template-columns: 1fr; }
+  .bio-card-premium { position: static; }
 }
 
 @media (max-width: 768px) {
-  .biography {
-    padding: 40px 20px;
-  }
-
-  .bio-card {
-    padding: 20px;
-  }
-
-  .award-item {
-    padding: 15px;
-  }
-}
-
-@media (max-width: 480px) {
-  .biography {
-    padding: 20px 15px;
-  }
-
-  .bio-section {
-    padding: 20px;
-  }
-
-  .awards-grid {
-    grid-template-columns: 1fr;
-  }
+  .biography { padding: 4rem 2rem; }
+  .bio-header h1 { font-size: 3rem; }
+  .bio-section-premium { padding: 2rem; }
 }

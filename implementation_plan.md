@@ -1,35 +1,41 @@
-# Implementation Plan - Fix Blank Screen Issue
+# Functional "Cinema Mode" Upgrade
 
-The user reports that clicking certain buttons (Filmography, Biography) causes the screen to go blank. Investigation revealed that the central data file is corrupted, leading to React component crashes during rendering.
+This plan upgrades the streaming experience from sample placeholders to a functional **Smart Player** that can handle actual movie embeds (like YouTube) and direct video files. It also includes guidance on legal monetization to help you with your goal.
 
 ## User Review Required
 
 > [!IMPORTANT]
-> The data file `src/data/prabhasData.js` was found to be severely corrupted with overlapping text and invalid syntax. I will reconstruct this file with valid, representative data to restore functionality. Any custom data previously added by the user may need to be re-entered.
+> **Copyright Awareness**: To grow a successful and profitable website, I strongly recommend using official YouTube embeds or linking to official streaming platforms. Hosting pirated content (like Movierulz) can lead to legal issues and will prevent you from using standard ad networks (like AdSense).
 
 ## Proposed Changes
 
-### Data Layer
+### Core Upgrade: The Smart Player
+
+#### [MODIFY] [Watch.jsx](file:///c:/Users/Lenovo/OneDrive/Desktop/The%20Legend%20Prabhas/src/pages/Watch.jsx)
+- **Hybrid Player**: Update the player to automatically detect the source. If it's a YouTube link, it will use a seamless Iframe; if it's a direct file, it will use the custom HTML5 controls.
+- **Improved UX**: Ensure the transition between selecting a movie and playing it is instant and cinematic.
+
+#### [MODIFY] [watch.css](file:///c:/Users/Lenovo/OneDrive/Desktop/The%20Legend%20Prabhas/src/styles/pages/watch.css)
+- Add styles for the Iframe wrapper to ensure it fits perfectly within the premium "Cinema Frame".
+
+### Data Layer: Functional Links
 
 #### [MODIFY] [prabhasData.js](file:///c:/Users/Lenovo/OneDrive/Desktop/The%20Legend%20Prabhas/src/data/prabhasData.js)
-- Replace the corrupted content with a structured, valid JavaScript export containing `movies`, `biography`, `news`, and `reviews`.
-- Ensure all expected fields are present to satisfy component requirements.
+- Add a `videoSource` property to distinguish between `direct` and `youtube`.
+- Update `watchUrls` with real YouTube Full Movie links where legally available (many Prabhas movies are officially on YouTube).
 
-### Components
+### Monetization Support
 
-#### [MODIFY] [Filmography.jsx](file:///c:/Users/Lenovo/OneDrive/Desktop/The%20Legend%20Prabhas/src/pages/Filmography.jsx)
-- Use optional chaining (`?.`) when accessing movie properties (e.g., `movie.cast?.some(...)`).
-- Add fallback values for mapping and filtering operations.
+#### [NEW] [MonetizationGuide.md](file:///c:/Users/Lenovo/.gemini/antigravity/brain/7b36d7b0-a0a2-4dc0-b4cf-383e38000bda/monetization_guide.md)
+- Provide a summary of how to integrate Ads (Google AdSense replacements for fan sites) and Affiliate marketing (Amazon/Netflix) to help you earn your sports fees.
 
-#### [MODIFY] [Biography.jsx](file:///c:/Users/Lenovo/OneDrive/Desktop/The%20Legend%20Prabhas/src/pages/Biography.jsx)
-- Add safety checks for `biography.personalLife.hobbies` and `biography.personalLife.philanthropyInterests` before calling `.join()`.
-- Ensure the component renders gracefully even if some biography fields are missing.
+## Open Questions
+- Do you already have specific video files (.mp4) you want to host, or are you primarily looking to embed movies from other platforms?
 
 ## Verification Plan
 
-### Automated Tests
-- I will use the browser tool to navigate to `/filmography` and `/biography` to ensure the pages load correctly without crashing.
-- I will test the search and filter functionality in the Filmography page to ensure it handles the new data correctly.
-
 ### Manual Verification
-- Verify that the "Explore Filmography" button on the Home page no longer leads to a blank screen.
+1.  Navigate to the **Streaming Hub**.
+2.  Select a movie (e.g., Eeswar).
+3.  Verify that it plays the official YouTube full movie directly inside the website's premium frame.
+4.  Test quality switching for direct video files.

@@ -1,12 +1,23 @@
-import React, { useState, useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState, useContext, useEffect } from 'react'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/header.css'
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const { user, logout } = useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const handleLogout = () => {
     logout()
@@ -14,47 +25,84 @@ export default function Header() {
     navigate('/')
   }
 
+  const navItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Watch All', path: '/watch', className: 'watch-link' },
+    { name: 'Movies', path: '/filmography' },
+    { name: 'Biography', path: '/biography' },
+    { name: '3D Gallery', path: '/gallery' },
+    { name: 'News', path: '/news' },
+    { name: 'Reviews', path: '/reviews' },
+    { name: 'Premium', path: '/premium', className: 'premium-link' },
+  ]
+
   return (
-    <header className="header">
+    <motion.header 
+      className={`header ${scrolled ? 'scrolled' : ''}`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
+    >
       <div className="header-container">
-        <div className="logo">
+        <motion.div 
+          className="logo"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <Link to="/">
             <h1>PRABHAS</h1>
             <p className="tagline">The Legend</p>
           </Link>
-        </div>
+        </motion.div>
         
         <nav className={`nav ${menuOpen ? 'active' : ''}`}>
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/watch" className="nav-link watch-link">Watch All</Link>
-          <Link to="/filmography" className="nav-link">Movies</Link>
-          <Link to="/biography" className="nav-link">Biography</Link>
-          <Link to="/gallery" className="nav-link">3D Gallery</Link>
-          <Link to="/news" className="nav-link">News</Link>
-          <Link to="/reviews" className="nav-link">Reviews</Link>
-          <Link to="/premium" className="nav-link premium-link">Premium</Link>
+          {navItems.map((item, idx) => (
+            <motion.div
+              key={item.path}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 + idx * 0.05 }}
+            >
+              <Link 
+                to={item.path} 
+                className={`nav-link ${item.className || ''} ${location.pathname === item.path ? 'active' : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                {item.name}
+              </Link>
+            </motion.div>
+          ))}
           
           {user ? (
-            <>
-              <Link to="/dashboard" className="nav-link">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+            >
+              <Link to="/dashboard" className="nav-link" onClick={() => setMenuOpen(false)}>
                 {user.name}
               </Link>
               <button className="nav-link logout-btn" onClick={handleLogout}>
                 Logout
               </button>
-            </>
+            </motion.div>
           ) : (
-            <Link to="/login" className="nav-link login-link">Login</Link>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <Link to="/login" className="nav-link login-link" onClick={() => setMenuOpen(false)}>Login</Link>
+            </motion.div>
           )}
         </nav>
 
-        <button 
+        <motion.button 
           className="menu-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
+          whileTap={{ scale: 0.9 }}
         >
-          ☰
-        </button>
+          {menuOpen ? '✕' : '☰'}
+        </motion.button>
       </div>
-    </header>
+    </motion.header>
   )
 }

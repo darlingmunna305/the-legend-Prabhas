@@ -1,15 +1,9 @@
-- [x] Update `src/data/prabhasData.js` with full filmography (24 movies)
-    - [x] Create data objects for each movie including budget, collection, status, and posters
-- [x] Update `src/pages/Filmography.jsx`
-    - [x] Add achievement badges (Hit, Blockbuster) to cards
-    - [x] Update modal to show budget and collection
-    - [x] Add styling for status badges
-- [x] Update `src/pages/Gallery.jsx` (3D Gallery)
-    - [x] Integrate all 24 movies into the Three.js scene
-    - [x] Implement image textures for posters
-    - [x] Enhance side panel with budget, collection, and status
-    - [x] Improve transitions and interactivity
-- [x] Verify UI and data
-    - [x] Check Filmography grid
-    - [x] Check 3D Gallery rotation and info
-    - [x] Verify search and filters
+- `[x]` Modernize Core UI (Global CSS, Header, Home)
+- `[x]` Redesign Filmography & Gallery
+- `[x]` Enhance Biography Page
+- `[/]` Upgrade Streaming Hub to functional "Smart Player"
+    - `[ ]` Implement hybrid Video/Iframe player in `Watch.jsx`
+    - `[ ]` Update `watch.css` for cinematic iframe handling
+    - `[ ]` Add real (legal) YouTube movie placeholders in `prabhasData.js`
+- `[ ]` Provide Monetization & Growth Guidance
+- `[ ]` Final responsiveness and stability check

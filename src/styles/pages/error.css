@@ -1,0 +1,545 @@
+/* Error Pages Styling - 404 and 500 */
+
+.error-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 15, 30, 0.95) 50%, rgba(10, 10, 10, 0.95) 100%),
+              radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+  background-attachment: fixed;
+  color: #e0e0e0;
+  padding: 40px 20px;
+}
+
+.error-container {
+  max-width: 600px;
+  width: 100%;
+  animation: slideInScale 0.6s ease;
+}
+
+.error-content {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-radius: 12px;
+  padding: 60px 40px;
+  background: rgba(20, 20, 25, 0.6);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4),
+              inset 0 1px 0 rgba(212, 175, 55, 0.1),
+              0 0 30px rgba(212, 175, 55, 0.1);
+  text-align: center;
+}
+
+.error-code {
+  font-size: 8em;
+  font-weight: 900;
+  background: linear-gradient(135deg, #d4af37 0%, #f0e68c 50%, #d4af37 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  letter-spacing: 5px;
+  text-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+  animation: float 3s ease-in-out infinite;
+  line-height: 1;
+}
+
+.error-content h1 {
+  font-size: 2.5em;
+  color: #e0e0e0;
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  animation: slideInDown 0.6s ease 0.1s both;
+}
+
+.error-message {
+  font-size: 1.1em;
+  color: #b0b0b0;
+  margin-bottom: 40px;
+  line-height: 1.6;
+  animation: fadeIn 0.6s ease 0.2s both;
+}
+
+.error-suggestions {
+  margin: 40px 0;
+  animation: fadeIn 0.6s ease 0.3s both;
+}
+
+.error-suggestions p {
+  color: #d4af37;
+  margin-bottom: 20px;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+.suggestion-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.suggestion-links .btn-3d-liquid,
+.suggestion-links .btn-cool-liquid {
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.error-contact {
+  background: rgba(212, 175, 55, 0.05);
+  border-left: 3px solid #d4af37;
+  padding: 20px;
+  border-radius: 6px;
+  margin: 30px 0;
+  animation: fadeIn 0.6s ease 0.4s both;
+}
+
+.error-contact p {
+  color: #d0d0d0;
+  margin: 8px 0;
+  line-height: 1.6;
+}
+
+.error-contact p:first-child {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.error-illustration {
+  margin-top: 40px;
+  animation: float 4s ease-in-out infinite;
+}
+
+.illustration-text {
+  font-size: 5em;
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.3));
+  animation: spin 4s linear infinite;
+}
+
+.not-found .illustration-text {
+  animation: float 3s ease-in-out infinite;
+}
+
+.server-error .illustration-text {
+  animation: spin 3s linear infinite;
+}
+
+/* Not Found Specific */
+.not-found {
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(30, 20, 10, 0.95) 50%, rgba(10, 10, 10, 0.95) 100%),
+              radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
+}
+
+/* Server Error Specific */
+.server-error {
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 30, 30, 0.95) 50%, rgba(10, 10, 10, 0.95) 100%),
+              radial-gradient(circle at 20% 50%, rgba(100, 200, 255, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(100, 200, 255, 0.05) 0%, transparent 50%);
+}
+
+.server-error .error-code {
+  background: linear-gradient(135deg, #64c8ff 0%, #a0d8ff 50%, #64c8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.server-error .error-suggestions p,
+.server-error .error-contact p:first-child {
+  color: #64c8ff;
+}
+
+/* Animations */
+@keyframes slideInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .error-content {
+    padding: 40px 25px;
+  }
+
+  .error-code {
+    font-size: 5em;
+    letter-spacing: 3px;
+  }
+
+  .error-content h1 {
+    font-size: 1.8em;
+  }
+
+  .error-message {
+    font-size: 0.95em;
+  }
+
+  .suggestion-links {
+    flex-direction: column;
+  }
+
+  .suggestion-links .btn-3d-liquid,
+  .suggestion-links .btn-cool-liquid {
+    width: 100%;
+  }
+
+  .illustration-text {
+    font-size: 3em;
+  }
+}
+
+@media (max-width: 480px) {
+  .error-page {
+    padding: 20px;
+  }
+
+  .error-content {
+    padding: 30px 20px;
+  }
+
+  .error-code {
+    font-size: 3.5em;
+  }
+
+  .error-content h1 {
+    font-size: 1.4em;
+  }
+
+  .illustration-text {
+    font-size: 2.5em;
+  }
+}
+/* Error Pages Styling */
+.error-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a0f0f 25%, #0a0a0a 50%, #0f1515 75%, #0a0a0a 100%);
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #e0e0e0;
+  position: relative;
+  overflow: hidden;
+}
+
+.error-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.08) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.error-container::after {
+  content: '';
+  position: fixed;
+  top: -50%;
+  right: -10%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.05) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: float 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+.error-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 700px;
+  animation: fadeIn 0.8s ease;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #d4af37 0%, #e8c745 50%, #00d4ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 0 60px rgba(212, 175, 55, 0.2);
+}
+
+.error-title {
+  font-size: 2.5rem;
+  color: #fff;
+  margin: 20px 0;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.error-description {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  margin-bottom: 40px;
+  line-height: 1.6;
+}
+
+.error-animation {
+  margin: 50px 0;
+  perspective: 1000px;
+}
+
+.error-icon {
+  font-size: 6rem;
+  display: inline-block;
+  animation: bounceError 2s ease-in-out infinite, rotateError 6s linear infinite;
+}
+
+.error-actions {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 40px 0;
+}
+
+.error-actions .btn {
+  display: inline-block;
+  padding: 15px 35px;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  border: none;
+}
+
+.error-actions .btn-3d-liquid {
+  background: linear-gradient(135deg, #d4af37 0%, #e8c745 100%);
+  color: #000;
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+}
+
+.error-actions .btn-3d-liquid:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(212, 175, 55, 0.5);
+}
+
+.error-actions .btn-cool-liquid {
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(0, 212, 255, 0.3);
+}
+
+.error-actions .btn-cool-liquid:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 50px rgba(0, 212, 255, 0.5);
+}
+
+.error-suggestions {
+  background: rgba(20, 20, 20, 0.6);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(212, 175, 55, 0.15);
+  border-radius: 12px;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+.error-suggestions h3 {
+  color: #d4af37;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.error-suggestions ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+.error-suggestions li {
+  margin: 0;
+  padding: 0;
+}
+
+.error-suggestions a {
+  color: #00d4ff;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.error-suggestions a:hover {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: rgba(0, 212, 255, 0.6);
+  color: #fff;
+}
+
+.error-info {
+  margin-top: 30px;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+.error-info p {
+  margin: 5px 0;
+}
+
+/* Error 404 specific */
+.error-404 .error-icon {
+  animation: bounceError 2s ease-in-out infinite, rotateError 6s linear infinite;
+}
+
+/* Error 500 specific */
+.error-500 .error-icon {
+  animation: spinError 3s linear infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceError {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes rotateError {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinError {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(30px);
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .error-code {
+    font-size: 5rem;
+  }
+
+  .error-title {
+    font-size: 1.8rem;
+  }
+
+  .error-description {
+    font-size: 1rem;
+  }
+
+  .error-icon {
+    font-size: 4rem;
+  }
+
+  .error-actions {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .error-actions .btn {
+    width: 100%;
+  }
+
+  .error-suggestions ul {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .error-suggestions a {
+    width: 100%;
+    text-align: center;
+  }
+}

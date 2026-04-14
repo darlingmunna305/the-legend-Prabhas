@@ -1,88 +1,114 @@
 import React from 'react'
+import { motion } from 'framer-motion'
 import { biography } from '../data/prabhasData'
 import '../styles/pages/biography.css'
 
 export default function Biography() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { staggerChildren: 0.1 }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.23, 1, 0.32, 1] } }
+  }
+
   return (
-    <div className="biography">
+    <motion.div 
+      className="biography"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="bio-header">
-        <h1>{biography?.name || 'Prabhas'}</h1>
-        <p className="tagline">"The Legend of Indian Cinema"</p>
+        <motion.h1 variants={itemVariants}>{biography?.name || 'Prabhas'}</motion.h1>
+        <motion.p className="tagline" variants={itemVariants}>
+          The Legend of Indian Cinema
+        </motion.p>
       </div>
 
       <div className="bio-container">
-        <div className="bio-sidebar">
-          <div className="bio-card quick-info">
-            <h3>Quick Info</h3>
+        <motion.div className="bio-sidebar" variants={itemVariants}>
+          <div className="bio-card-premium">
+            <h3 className="gold-text">Pulse</h3>
             <div className="info-item">
-              <span className="label">Date of Birth:</span>
-              <span className="value">{biography?.birthDate || 'N/A'}</span>
+              <span className="info-label">Born</span>
+              <span className="info-value">{biography?.birthDate}</span>
             </div>
             <div className="info-item">
-              <span className="label">Place of Birth:</span>
-              <span className="value">{biography?.birthPlace || 'N/A'}</span>
+              <span className="info-label">Origin</span>
+              <span className="info-value">{biography?.birthPlace}</span>
             </div>
             <div className="info-item">
-              <span className="label">Height:</span>
-              <span className="value">{biography?.height || 'N/A'}</span>
+              <span className="info-label">Height</span>
+              <span className="info-value">{biography?.height}</span>
             </div>
             <div className="info-item">
-              <span className="label">Years Active:</span>
-              <span className="value">{biography?.yearsActive || 'N/A'}</span>
+              <span className="info-label">Legacy</span>
+              <span className="info-value">{biography?.yearsActive} Years</span>
+            </div>
+            
+            <div className="info-item" style={{ marginTop: '2rem' }}>
+              <span className="info-label">Languages</span>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginTop: '0.5rem' }}>
+                {biography?.languages?.map(lang => (
+                  <span key={lang} className="meta-tag" style={{ fontSize: '0.7rem' }}>{lang}</span>
+                ))}
+              </div>
             </div>
           </div>
-
-          <div className="bio-card languages">
-            <h3>Languages</h3>
-            <div className="language-list">
-              {(biography?.languages || []).map((lang, idx) => (
-                <span key={idx} className="language-tag">{lang}</span>
-              ))}
-            </div>
-          </div>
-        </div>
+        </motion.div>
 
         <div className="bio-main">
-          <div className="bio-section about">
-            <h2>About</h2>
-            <p>{biography?.about || 'No information available.'}</p>
-          </div>
+          <motion.section className="bio-section-premium" variants={itemVariants}>
+            <h2 className="shimmer-text">The Journey</h2>
+            <p>{biography?.about}</p>
+          </motion.section>
 
-          <div className="bio-section highlights">
-            <h2>Career Highlights</h2>
-            <ul className="highlight-list">
-              {(biography?.careerHighlights || []).map((highlight, idx) => (
-                <li key={idx}>{highlight}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="bio-section awards">
-            <h2>Awards & Recognition</h2>
-            <div className="awards-grid">
-              {(biography?.awards || []).map((award, idx) => (
-                <div key={idx} className="award-item">
-                  <div className="award-year">{award?.year}</div>
-                  <div className="award-name">{award?.award}</div>
-                  {award?.category && <div className="award-category">{award?.category}</div>}
-                  {award?.film && <div className="award-film">{award?.film}</div>}
+          <motion.section className="bio-section-premium" variants={itemVariants}>
+            <h2>Career Milestones</h2>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              {biography?.careerHighlights?.map((highlight, idx) => (
+                <div key={idx} style={{ paddingLeft: '1.5rem', borderLeft: '2px solid var(--primary-gold)' }}>
+                  <p style={{ margin: 0 }}>{highlight}</p>
                 </div>
               ))}
             </div>
-          </div>
+          </motion.section>
 
-          <div className="bio-section personal">
-            <h2>Personal Life</h2>
-            <div className="personal-info">
-              <h4>Hobbies & Interests</h4>
-              <p>{biography?.personalLife?.hobbies?.join(', ') || 'N/A'}</p>
-              
-              <h4>Philanthropy</h4>
-              <p>Interests in: {biography?.personalLife?.philanthropyInterests?.join(', ') || 'N/A'}</p>
+          <motion.section className="bio-section-premium" variants={itemVariants}>
+            <h2>Hall of Fame</h2>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1.5rem' }}>
+              {biography?.awards?.map((award, idx) => (
+                <div key={idx} className="award-card-premium">
+                  <span className="award-year-gold">{award.year}</span>
+                  <span style={{ fontWeight: 700, color: '#fff' }}>{award.award}</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>{award.category}</span>
+                  <span className="hero-tag" style={{ fontSize: '0.6rem', marginTop: '0.5rem' }}>{award.film}</span>
+                </div>
+              ))}
             </div>
-          </div>
+          </motion.section>
+          
+          <motion.section className="bio-section-premium" variants={itemVariants}>
+            <h2>Beyond The Screen</h2>
+            <div className="info-grid" style={{ gridTemplateColumns: '1fr 1fr' }}>
+              <div>
+                <span className="info-label">Interests</span>
+                <p>{biography?.personalLife?.hobbies?.join(' • ')}</p>
+              </div>
+              <div>
+                <span className="info-label">Global Impact</span>
+                <p>Support in: {biography?.personalLife?.philanthropyInterests?.join(', ')}</p>
+              </div>
+            </div>
+          </motion.section>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

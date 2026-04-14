@@ -1,8 +1,27 @@
 /* User Dashboard Page Styles */
 .dashboard-container {
   padding: 80px 20px;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(20, 15, 10, 0.7) 50%, rgba(10, 10, 10, 0.95) 100%);
   min-height: 100vh;
+  position: relative;
+}
+
+.dashboard-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 25% 40%, rgba(212, 175, 55, 0.03) 0%, transparent 40%),
+    radial-gradient(circle at 75% 60%, rgba(212, 175, 55, 0.02) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.dashboard-container > * {
+  position: relative;
+  z-index: 1;
 }
 
 .dashboard-header {
@@ -16,28 +35,39 @@
   border: 2px solid #d4af37;
   border-radius: 15px;
   animation: slideInDown 0.8s ease;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .dashboard-header h1 {
-  color: #d4af37;
+  background: linear-gradient(135deg, #d4af37 0%, #e8c745 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 2rem;
   margin: 0;
+  font-weight: 800;
 }
 
 .dashboard-header .logout-btn {
-  padding: 10px 25px;
-  background-color: #d4af37;
+  padding: 12px 28px;
+  background: linear-gradient(135deg, #d4af37 0%, #e8c745 100%);
   color: #0a0a0a;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+  letter-spacing: 0.5px;
 }
 
 .dashboard-header .logout-btn:hover {
-  background-color: #c99a2e;
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  background: linear-gradient(135deg, #e8c745 0%, #d4af37 100%);
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+  transform: translateY(-2px);
 }
 
 /* Account Info Section */
@@ -49,14 +79,26 @@
   border: 2px solid #d4af37;
   border-radius: 15px;
   animation: slideInUp 0.8s ease 0.1s both;
+  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.account-section:hover {
+  box-shadow: 0 12px 35px rgba(212, 175, 55, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
 .section-title {
-  color: #d4af37;
+  background: linear-gradient(135deg, #d4af37 0%, #e8c745 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 1.5rem;
   margin-bottom: 25px;
   padding-bottom: 15px;
   border-bottom: 2px solid #d4af37;
+  font-weight: 700;
 }
 
 .info-grid {
@@ -66,10 +108,18 @@
 }
 
 .info-item {
-  background-color: rgba(25, 25, 25, 0.5);
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.8) 0%, rgba(10, 10, 10, 0.6) 100%);
   padding: 20px;
   border-radius: 10px;
   border-left: 4px solid #d4af37;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.info-item:hover {
+  transform: translateY(-3px);
+  border-left-color: #e8c745;
+  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.2);
 }
 
 .info-label {
@@ -86,12 +136,17 @@
   font-weight: 600;
 }
 
-/* Subscription Status */
 .subscription-status {
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.08));
   padding: 25px;
   border-radius: 10px;
   border: 2px solid #d4af37;
+  box-shadow: 0 8px 20px rgba(212, 175, 55, 0.15);
+  transition: all 0.3s ease;
+}
+
+.subscription-status:hover {
+  box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
 }
 
 .status-badge {

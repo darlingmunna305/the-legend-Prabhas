@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { movies } from '../data/prabhasData'
 import { AuthContext } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'
@@ -39,7 +40,7 @@ export default function Watch() {
         return
       }
       if (user?.subscription !== 'elite') {
-        if (window.confirm('4K Ultra HD is only available for Elite members (₹1000/month). Upgrade now?')) {
+        if (window.confirm('4K Ultra HD is only available for Elite members. Upgrade now?')) {
           navigate('/premium')
         }
         return
@@ -48,7 +49,6 @@ export default function Watch() {
     setQuality(q)
   }
 
-  // Video Logic
   const togglePlay = () => {
     if (videoRef.current.paused) {
       videoRef.current.play()
@@ -59,25 +59,10 @@ export default function Watch() {
     }
   }
 
-  const handleLoadedMetadata = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration)
-    }
-  }
-
-  const handleDurationChange = () => {
-    if (videoRef.current) {
-      setDuration(videoRef.current.duration)
-    }
-  }
-
   const handleTimeUpdate = () => {
     if (videoRef.current) {
       setCurrentTime(videoRef.current.currentTime)
-      // Fallback if duration was missed during load
-      if (!duration && videoRef.current.duration) {
-        setDuration(videoRef.current.duration)
-      }
+      if (!duration && videoRef.current.duration) setDuration(videoRef.current.duration)
     }
   }
 
@@ -90,13 +75,6 @@ export default function Watch() {
   const toggleMute = () => {
     videoRef.current.muted = !videoRef.current.muted
     setIsMuted(videoRef.current.muted)
-  }
-
-  const handleVolumeChange = (e) => {
-    const v = e.target.value
-    videoRef.current.volume = v
-    setVolume(v)
-    setIsMuted(v === 0)
   }
 
   const toggleFullscreen = () => {
@@ -123,149 +101,143 @@ export default function Watch() {
     }, 3000)
   }
 
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (!selectedMovie) return
-      if (e.code === 'Space') {
-        e.preventDefault()
-        togglePlay()
-      } else if (e.code === 'KeyF') {
-        toggleFullscreen()
-      } else if (e.code === 'KeyM') {
-        toggleMute()
-      }
-    }
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [selectedMovie, isPlaying])
-
   return (
     <div className="watch-page">
-      <div className="watch-header">
-        <h1>Prabhas Streaming Hub</h1>
-        <p>Watch all the latest and classic Prabhas movies in high quality</p>
-      </div>
-
-      {selectedMovie ? (
-        <div className="player-section">
-          <div 
-            className={`player-container ${showControls ? 'show-controls' : 'hide-controls'}`}
-            ref={playerRef}
-            onMouseMove={handleMouseMove}
+      <AnimatePresence mode="wait">
+        {!selectedMovie ? (
+          <motion.div 
+            key="list"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="streaming-container"
           >
-            <div className="video-wrapper" onClick={togglePlay}>
-              <video 
-                ref={videoRef}
-                key={`${selectedMovie.id}-${quality}`}
-                className="main-video"
-                onTimeUpdate={handleTimeUpdate}
-                onLoadedMetadata={handleLoadedMetadata}
-                onDurationChange={handleDurationChange}
-                onEnded={() => setIsPlaying(false)}
-              >
-                <source src={selectedMovie.watchUrls?.[quality] || selectedMovie.watchUrls?.['720p']} type="video/mp4" />
-              </video>
-              
+            <div className="watch-header">
+              <h1 className="gold-text">PREMIUM STREAMING</h1>
+              <p>Experience the cinematic saga of Prabhas in Ultra HD</p>
             </div>
 
-            {/* Custom Controls */}
-            <div className="custom-controls">
-              <div className="progress-area">
-                <input 
-                  type="range" 
-                  min="0" 
-                  max={duration || 0} 
-                  value={currentTime} 
-                  onChange={handleSeek}
-                  className="progress-bar"
-                />
-              </div>
-              
-              <div className="controls-main">
-                <div className="left-controls">
-                  <button className="ctrl-btn play-pause" onClick={togglePlay}>
-                    {isPlaying ? '⏸' : '▶'}
-                  </button>
-                  <div className="volume-group">
-                    <button className="ctrl-btn mute-toggle" onClick={toggleMute}>
-                      {isMuted || volume === 0 ? '🔇' : '🔊'}
-                    </button>
-                    <input 
-                      type="range" 
-                      min="0" 
-                      max="1" 
-                      step="0.1" 
-                      value={volume} 
-                      onChange={handleVolumeChange} 
-                      className="volume-slider"
-                    />
+            <div className="streaming-grid">
+              {movies.map((movie) => (
+                <motion.div 
+                  key={movie.id} 
+                  className={`streaming-card-premium ${movie.releaseStatus === 'Coming Soon' ? 'locked' : ''}`}
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => handleMovieSelect(movie)}
+                >
+                  <div className="poster-bg">
+                    <img src={movie.image} alt={movie.title} onError={(e) => e.target.src = 'https://via.placeholder.com/600x400?text=' + movie.title} />
                   </div>
-                  <div className="time-display">
-                    {formatTime(currentTime)} / {formatTime(duration)}
+                  <div className="card-overlay-watch">
+                    <span className="hero-tag" style={{ fontSize: '0.6rem', marginBottom: '0.5rem' }}>
+                      {movie.year} • {movie.genre}
+                    </span>
+                    <h3>{movie.title}</h3>
+                    <div className="meta-tag" style={{ alignSelf: 'flex-start', marginTop: '0.5rem' }}>
+                      {movie.releaseStatus === 'Coming Soon' ? 'Coming Soon' : 'Stream Now'}
+                    </div>
                   </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div 
+            key="player"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="player-section"
+          >
+            <div className="player-frame" ref={playerRef} onMouseMove={handleMouseMove}>
+              {selectedMovie.videoSource === 'youtube' ? (
+                <div className="youtube-wrapper">
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src={`${selectedMovie.fullMovieUrl}?autoplay=1&modestbranding=1&rel=0`}
+                    title="Prabhas Movie Player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
                 </div>
+              ) : (
+                <>
+                  <video 
+                    ref={videoRef}
+                    key={`${selectedMovie.id}-${quality}`}
+                    className="main-video"
+                    onTimeUpdate={handleTimeUpdate}
+                    onClick={togglePlay}
+                  >
+                    <source src={selectedMovie.watchUrls?.[quality] || selectedMovie.watchUrls?.['720p']} type="video/mp4" />
+                  </video>
 
-                <div className="right-controls">
-                  <div className="quality-dropdown">
-                    <button className="q-select-btn">{quality.toUpperCase()}</button>
-                    <div className="q-menu">
-                      {['720p', '1080p', '4k'].map(q => (
-                        <button key={q} onClick={() => handleQualityChange(q)} className={quality === q ? 'active' : ''}>
-                          {q.toUpperCase()} {q === '4k' ? '💎' : ''}
+                  <div className={`cinema-controls ${showControls ? 'visible' : ''}`} style={{ opacity: showControls ? 1 : 0 }}>
+                    <div className="seeker-wrap">
+                      <input 
+                        type="range" 
+                        min="0" 
+                        max={duration || 0} 
+                        value={currentTime} 
+                        onChange={handleSeek}
+                        className="seeker-bar"
+                      />
+                    </div>
+                    
+                    <div className="controls-row">
+                      <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
+                        <button className="btn-icon" onClick={togglePlay}>
+                          {isPlaying ? '⏸' : '▶'}
                         </button>
-                      ))}
+                        <button className="btn-icon" onClick={toggleMute} style={{ width: '40px', height: '40px' }}>
+                          {isMuted ? '🔇' : '🔊'}
+                        </button>
+                        <span className="time-display">{formatTime(currentTime)} / {formatTime(duration)}</span>
+                      </div>
+
+                      <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                        <div className="quality-dropdown">
+                          <select 
+                            value={quality} 
+                            onChange={(e) => handleQualityChange(e.target.value)}
+                            className="filter-select"
+                            style={{ padding: '0.4rem 1rem', fontSize: '0.8rem' }}
+                          >
+                            <option value="720p">720p HD</option>
+                            <option value="1080p">1080p FHD</option>
+                            <option value="4k">4K UHD 💎</option>
+                          </select>
+                        </div>
+                        <button className="btn-icon" onClick={toggleFullscreen}>
+                          {isFullscreen ? '⤙⤚' : '⤢'}
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <button className="ctrl-btn fullscreen" onClick={toggleFullscreen}>
-                    {isFullscreen ? '⤙⤚' : '⤢'}
-                  </button>
-                </div>
-              </div>
+                </>
+              )}
             </div>
-          </div>
 
-          <div className="playing-context">
-            <div className="movie-meta">
-              <h2>{selectedMovie.title}</h2>
-              <p>{selectedMovie.year} • {selectedMovie.genre} • {selectedMovie.description}</p>
-            </div>
-            <button className="exit-btn" onClick={() => setSelectedMovie(null)}>Exit Player</button>
-          </div>
-        </div>
-      ) : (
-        <div className="movies-streaming-list">
-          <div className="filters-bar">
-            <h2>Select a Movie to Stream</h2>
-          </div>
-          <div className="streaming-grid">
-            {movies.map((movie) => (
-              <div 
-                key={movie.id} 
-                className={`streaming-card ${movie.releaseStatus === 'Coming Soon' ? 'locked' : ''}`}
-                onClick={() => handleMovieSelect(movie)}
-              >
-                <div className="poster-wrapper">
-                  <img src={movie.image} alt={movie.title} onError={(e) => e.target.src = 'https://via.placeholder.com/200x300?text=' + movie.title} />
-                  {movie.releaseStatus === 'Coming Soon' ? (
-                    <div className="status-overlay coming-soon">
-                      <span>COMING SOON</span>
-                      <small>Available 1 week after release</small>
-                    </div>
-                  ) : (
-                    <div className="status-overlay watch-now">
-                      <span>WATCH NOW</span>
-                    </div>
-                  )}
-                </div>
-                <div className="card-info">
-                  <h3>{movie.title}</h3>
-                  <p>{movie.year}</p>
+            <div className="playback-info">
+              <div>
+                <span className="hero-tag" style={{ fontSize: '0.8rem' }}>Currently Streaming</span>
+                <h2 className="gold-text">{selectedMovie.title}</h2>
+                <p style={{ color: 'var(--text-secondary)', maxWidth: '600px' }}>{selectedMovie.description}</p>
+                <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+                  <span className="meta-tag">{selectedMovie.year}</span>
+                  <span className="meta-tag">{selectedMovie.genre}</span>
+                  <span className="meta-tag">⭐ {selectedMovie.rating}</span>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      )}
+              <button className="exit-btn-alt" onClick={() => setSelectedMovie(null)}>
+                Exit Cinema
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

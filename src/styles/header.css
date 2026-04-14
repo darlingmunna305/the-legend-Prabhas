@@ -1,233 +1,163 @@
-/* Header Styles */
+/* Header Styles Redesign */
 .header {
-  background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-  border-bottom: 2px solid #d4af37;
   position: sticky;
   top: 0;
   z-index: 1000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  background: rgba(5, 5, 5, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  height: 80px;
+  display: flex;
+  align-items: center;
 }
 
 .header-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  max-width: 1400px;
+  padding: 0 4rem;
+  max-width: 1600px;
   margin: 0 auto;
   width: 100%;
-}
-
-.logo {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
 }
 
 .logo a {
   text-decoration: none;
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  line-height: 1;
 }
 
 .logo h1 {
   margin: 0;
-  font-size: 2rem;
-  color: #d4af37;
-  text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  text-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
 .tagline {
-  color: #d4af37;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  margin: 0;
+  letter-spacing: 4px;
+  color: var(--text-secondary);
+  opacity: 0.8;
+  margin-top: 2px;
 }
 
 .nav {
   display: flex;
-  gap: 30px;
+  gap: 2.5rem;
   align-items: center;
 }
 
 .nav-link {
-  color: #ffffff;
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
   position: relative;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.nav-link::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #d4af37;
-  transition: width 0.3s ease;
+  transition: var(--transition-smooth);
 }
 
 .nav-link:hover {
-  color: #d4af37;
+  color: #fff;
 }
 
-.nav-link:hover::after {
-  width: 100%;
-}
-
-.nav-link.login-link {
-  padding: 8px 20px;
-  border: 2px solid #d4af37;
-  border-radius: 5px;
-  background-color: transparent;
-  transition: all 0.3s ease;
-}
-
-.nav-link.login-link:hover {
-  background-color: rgba(212, 175, 55, 0.1);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
-}
-
-.nav-link.premium-link {
-  padding: 8px 20px;
-  background: linear-gradient(135deg, #d4af37 0%, #c99a2e 100%);
-  color: #0a0a0a;
-  border-radius: 5px;
-  font-weight: 700;
-  transition: all 0.3s ease;
-}
-
-.nav-link.premium-link:hover {
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
-  transform: scale(1.05);
-}
-
-.nav-link.premium-link::after {
-  display: none;
-}
-
-.logout-btn {
-  background: none;
-  cursor: pointer;
-  border: none;
-  font-family: inherit;
-  padding: 0;
-  transition: all 0.3s ease;
-}
-
-.logout-btn::after {
+.nav-link.active::after {
   content: '';
   position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #d4af37;
-  transition: width 0.3s ease;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  background: var(--primary-gold);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--primary-gold);
 }
 
-.logout-btn:hover {
-  color: #d4af37;
+.watch-link {
+  color: var(--primary-gold);
+  font-weight: 600;
 }
 
-.logout-btn:hover::after {
-  width: 100%;
+.premium-link {
+  background: var(--gold-gradient);
+  color: #000 !important;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-weight: 700 !important;
+  box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+}
+
+.premium-link:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 15px 30px rgba(212, 175, 55, 0.4);
+}
+
+.login-link {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 20px;
+  border-radius: 50px;
+}
+
+.login-link:hover {
+  border-color: var(--primary-gold);
+  background: rgba(212, 175, 55, 0.05);
 }
 
 .menu-toggle {
   display: none;
   background: none;
   border: none;
-  color: #d4af37;
+  color: #fff;
   font-size: 1.5rem;
   cursor: pointer;
-  transition: all 0.3s ease;
 }
 
-.menu-toggle:hover {
-  transform: scale(1.2);
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
+/* Mobile Adjustments */
+@media (max-width: 1024px) {
   .header-container {
-    padding: 15px 20px;
+    padding: 0 2rem;
   }
-
-  .logo h1 {
-    font-size: 1.5rem;
+  .nav {
+    gap: 1.5rem;
   }
+}
 
+@media (max-width: 768px) {
+  .header {
+    height: 70px;
+  }
   .menu-toggle {
     display: block;
   }
-
   .nav {
-    display: none;
-    position: absolute;
-    top: 100%;
+    position: fixed;
+    top: 70px;
     left: 0;
     width: 100%;
+    height: calc(100vh - 70px);
     flex-direction: column;
-    gap: 0;
-    background: #1a1a1a;
-    border-top: 1px solid #d4af37;
-    padding: 20px 0;
+    background: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(20px);
+    justify-content: center;
+    transform: translateX(100%);
+    transition: transform 0.4s ease;
+    z-index: 999;
   }
-
   .nav.active {
-    display: flex;
+    transform: translateX(0);
   }
-
   .nav-link {
-    padding: 15px 20px;
-    display: block;
-  }
-
-  .nav-link::after {
-    display: none;
-  }
-
-  .nav-link:hover {
-    background-color: rgba(212, 175, 55, 0.1);
-  }
-
-  .nav-link.login-link {
-    border: none;
-    background-color: transparent;
-    padding: 15px 20px;
-  }
-
-  .nav-link.premium-link {
-    margin: 10px 20px;
-    background: linear-gradient(135deg, #d4af37 0%, #c99a2e 100%);
-    color: #0a0a0a;
-    padding: 12px 20px;
-    font-weight: 700;
-  }
-
-  .logout-btn {
-    padding: 15px 20px;
-    display: block;
-    text-align: left;
-  }
-}
-
-@media (max-width: 480px) {
-  .header-container {
-    padding: 10px 15px;
-  }
-
-  .logo h1 {
-    font-size: 1.2rem;
-  }
-
-  .nav-link {
-    font-size: 0.9rem;
+    font-size: 1.5rem;
   }
 }

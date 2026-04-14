@@ -16,11 +16,9 @@ export const movies = [
     collection: "₹8 Crore",
     streamingLinks: { "YouTube": "https://www.youtube.com/results?search_query=eeswar+full+movie" },
     releaseStatus: "Released",
-    watchUrls: {
-      "720p": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      "1080p": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-      "4k": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-    }
+    videoSource: "youtube",
+    fullMovieUrl: "https://www.youtube.com/embed/wXfUvF1z9bU", // Placeholder or Official Link
+    watchUrls: {}
   },
   {
     id: 2,
@@ -54,7 +52,9 @@ export const movies = [
     status: "Hit",
     budget: "₹10 Crore",
     collection: "₹25 Crore",
-    streamingLinks: { "YouTube": "https://www.youtube.com/results?search_query=varsham+full+movie" }
+    streamingLinks: { "YouTube": "https://www.youtube.com/results?search_query=varsham+full+movie" },
+    videoSource: "youtube",
+    fullMovieUrl: "https://www.youtube.com/embed/O9sR8-v_o70"
   },
   {
     id: 4,
@@ -106,7 +106,9 @@ export const movies = [
     featured: true,
     budget: "₹15 Crore",
     collection: "₹25 Crore",
-    streamingLinks: { "YouTube": "https://www.youtube.com/results?search_query=chatrapathi+full+movie" }
+    streamingLinks: { "YouTube": "https://www.youtube.com/results?search_query=chatrapathi+full+movie" },
+    videoSource: "youtube",
+    fullMovieUrl: "https://www.youtube.com/embed/nQ4-k8T6C9Q"
   },
   {
     id: 7,
@@ -193,11 +195,9 @@ export const movies = [
     collection: "₹40 Crore",
     streamingLinks: { "YouTube": "https://www.youtube.com/results?search_query=billa+full+movie" },
     releaseStatus: "Released",
-    watchUrls: {
-      "720p": "/videos/billa/720p.mp4",
-      "1080p": "/videos/billa/1080p.mp4",
-      "4k": "/videos/billa/4k.mp4"
-    }
+    videoSource: "youtube",
+    fullMovieUrl: "https://www.youtube.com/embed/C2LGD-Q6C9Q",
+    watchUrls: {}
   },
   {
     id: 12,

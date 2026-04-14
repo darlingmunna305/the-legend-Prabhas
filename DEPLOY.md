@@ -51,13 +51,13 @@ git push -u origin main
 npm install -g vercel
 ```
 
-2. Deploy:
+2. loy:
 
 ```bash
 vercel
 ```
 
-3. Follow the prompts to link and deploy your project
+3. flowthe prompts to link and deploy your project
 
 ### Option B: Deploy via Vercel Dashboard
 

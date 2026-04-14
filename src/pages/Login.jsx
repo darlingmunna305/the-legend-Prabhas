@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { motion } from 'framer-motion'
 import { useNavigate, Link } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/pages/auth.css'
@@ -27,61 +28,71 @@ export default function Login() {
       return
     }
 
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError('Please enter a valid email')
-      setLoading(false)
-      return
-    }
-
     const success = login(email, password)
     if (success) {
       navigate('/dashboard')
     } else {
-      setError('Login failed. Please try again.')
+      setError('Invalid credentials. Please try again.')
     }
     setLoading(false)
   }
 
   return (
     <div className="auth-container">
-      <div className="auth-card">
-        <h1>Login</h1>
-        <p className="subtitle">Access your Prabhas Fan Account</p>
+      <motion.div 
+        className="auth-card-premium"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+      >
+        <h1>Welcome Back</h1>
+        <span className="auth-subtitle">Login to your exclusive fan portal</span>
 
-        {error && <div className="error-message">{error}</div>}
+        {error && (
+          <motion.div 
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="error-message"
+            style={{ marginBottom: '2rem' }}
+          >
+            {error}
+          </motion.div>
+        )}
 
-        <form onSubmit={handleSubmit} className="auth-form">
-          <div className="form-group">
-            <label>Email</label>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group-premium">
+            <label className="form-label-premium">Identity</label>
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              placeholder="Email address"
+              className="form-input-premium"
               required
             />
           </div>
 
-          <div className="form-group">
-            <label>Password</label>
+          <div className="form-group-premium">
+            <label className="form-label-premium">Access Key</label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Password"
+              className="form-input-premium"
               required
             />
           </div>
 
-          <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+          <button type="submit" className="auth-btn-premium" disabled={loading}>
+            {loading ? 'Authenticating...' : 'Enter Portal'}
           </button>
         </form>
 
-        <div className="auth-footer">
-          <p>Don't have an account? <Link to="/signup">Sign up here</Link></p>
+        <div className="auth-footer-premium">
+          <p>New to the legend? <Link to="/signup">Create account</Link></p>
         </div>
-      </div>
+      </motion.div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/pages/premium.css'
@@ -10,78 +11,53 @@ export default function Premium() {
   const plans = [
     {
       id: 1,
-      name: 'Free',
+      name: 'Commoner',
       price: 0,
       duration: 'Forever',
-      description: 'Basic access to all content',
+      description: 'Basic access to the legend',
       features: [
-        'Browse movies and trailers',
+        'Browse movies & trailers',
         'Read actor biography',
-        'View news and updates',
-        'Write reviews',
-        'Basic movie information'
+        'View news & updates',
+        'Basic movie stats'
       ],
       color: '#999999',
-      cta: 'You are on this plan'
+      cta: 'Current Plan'
     },
     {
       id: 2,
-      name: 'Premium',
-      price: 100,
-      duration: '1 Month',
-      description: 'Enhanced access and exclusive features',
+      name: 'Loyal Fan',
+      price: 199,
+      duration: 'Month',
+      description: 'Enhanced cinematic experience',
       features: [
-        '✅ Everything in Free',
-        '✅ Ad-free experience',
-        '✅ Exclusive trailers & behind-the-scenes',
-        '✅ Early access to movie news',
-        '✅ Premium quality reviews',
-        '✅ Download trailers & articles',
-        '✅ VIP fan community forum',
-        '✅ Exclusive interviews'
+        'Everything in Commoner',
+        'Ad-free browsing',
+        'Exclusive behind-the-scenes',
+        'Early news access',
+        'Premium fan badge'
       ],
-      color: '#d4af37',
-      cta: 'Upgrade now',
+      color: 'var(--primary-gold)',
+      cta: 'Upgrade to Fan',
       recommended: true
     },
     {
       id: 3,
-      name: 'Elite',
-      price: 1000,
-      duration: '1 Month',
-      description: 'The ultimate streaming experience',
+      name: 'Imperial Elite',
+      price: 999,
+      duration: 'Month',
+      description: 'The ultimate royal treatment',
       features: [
-        '✅ Everything in Premium',
-        '✅ 4K Ultra HD Streaming',
-        '✅ Ad-free Movie Viewing',
-        '✅ Priority link availability',
-        '✅ Exclusive Ultra-HD posters'
+        'Everything in Loyal Fan',
+        '4K Ultra HD Streaming 💎',
+        'Priority feature requests',
+        'Exclusive 8K digital posters',
+        'Direct support chat'
       ],
       color: '#ffffff',
-      cta: 'Get Elite Access',
+      cta: 'Become Elite',
       recommended: false,
-      badge: 'Best for 4K'
-    },
-    {
-      id: 4,
-      name: 'Annual Premium',
-      price: 999,
-      duration: '1 Year',
-      description: 'Best value - save 2 months!',
-      features: [
-        '✅ Everything in Free',
-        '✅ Ad-free experience',
-        '✅ Exclusive trailers & behind-the-scenes',
-        '✅ Early access to movie news',
-        '✅ Premium quality reviews',
-        '✅ Download trailers & articles',
-        '✅ VIP fan community forum',
-        '✅ Exclusive interviews',
-        '✅ Priority customer support'
-      ],
-      color: '#ffd700',
-      cta: 'Subscribe annually',
-      badge: 'Save 2 months'
+      badge: 'Best Experience'
     }
   ]
 
@@ -90,82 +66,75 @@ export default function Premium() {
       navigate('/login')
       return
     }
-
-    if (user?.isPremium) {
-      alert('You already have an active subscription!')
-      return
-    }
-
     navigate(`/checkout/${planId}`)
   }
 
   return (
     <div className="premium-page">
-      <div className="premium-header">
-        <h1>Choose Your Plan</h1>
-        <p>Unlock exclusive features and premium content</p>
-      </div>
+      <motion.div 
+        className="premium-header"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <h1 className="gold-text">ASCEND TO LEGACY</h1>
+        <p>Unlock the full power of the Prabhas Fan Universe</p>
+      </motion.div>
 
       <div className="plans-container">
-        {plans.map(plan => (
-          <div key={plan.id} className={`plan-card ${plan.recommended ? 'recommended' : ''}`}>
-            {plan.badge && <div className="plan-badge">{plan.badge}</div>}
-            {plan.recommended && <div className="recommended-badge">RECOMMENDED</div>}
+        {plans.map((plan, idx) => (
+          <motion.div 
+            key={plan.id} 
+            className={`plan-card-premium ${plan.recommended ? 'recommended' : ''}`}
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }}
+          >
+            {plan.badge && <div className="plan-badge-gold">{plan.badge}</div>}
             
             <div className="plan-header">
               <h2 style={{ color: plan.color }}>{plan.name}</h2>
-              {plan.price > 0 ? (
-                <div className="plan-price">
-                  <span className="currency">₹</span>
-                  <span className="amount">{plan.price}</span>
-                  <span className="duration">/{plan.duration}</span>
-                </div>
-              ) : (
-                <div className="plan-price free">Free</div>
-              )}
+              <div className="plan-price">
+                <span className="amount">₹{plan.price}</span>
+                <span className="duration">/{plan.duration}</span>
+              </div>
               <p className="plan-description">{plan.description}</p>
             </div>
 
-            <ul className="plan-features">
+            <ul className="plan-features-list">
               {plan.features.map((feature, idx) => (
-                <li key={idx}>{feature}</li>
+                <li key={idx}><span>✓</span> {feature}</li>
               ))}
             </ul>
 
             <button
-              className={`plan-cta ${plan.id === 1 ? 'disabled' : ''}`}
+              className="plan-cta-premium"
               onClick={() => handleUpgrade(plan.id)}
-              disabled={plan.id === 1 || (user?.subscription === plan.name.toLowerCase())}
+              disabled={plan.id === 1}
             >
-              {user?.subscription === plan.name.toLowerCase() ? '✓ Current Plan' : plan.cta}
+              {plan.cta}
             </button>
-          </div>
+          </motion.div>
         ))}
       </div>
 
-      <div className="faq-section">
-        <h3>Frequently Asked Questions</h3>
-        
-        <div className="faq-item">
-          <h4>Can I cancel my subscription anytime?</h4>
-          <p>Yes! You can cancel at any time. No lock-in period.</p>
+      <motion.div 
+        className="faq-section-premium"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+      >
+        <h3 className="gold-text">Common Inquiries</h3>
+        <div className="faq-grid">
+          <div className="faq-item-premium">
+            <h4>Can I cancel anytime?</h4>
+            <p>Absolutely. You are in control of your legacy.</p>
+          </div>
+          <div className="faq-item-premium">
+            <h4>What is 4K Streaming?</h4>
+            <p>Imperial Elite members get access to ultra-high-definition content where available.</p>
+          </div>
         </div>
-
-        <div className="faq-item">
-          <h4>Is there a free trial?</h4>
-          <p>Yes, we offer a 7-day free trial for new premium subscribers.</p>
-        </div>
-
-        <div className="faq-item">
-          <h4>What payment methods do you accept?</h4>
-          <p>We accept all major credit/debit cards, UPI, and digital wallets via Razorpay.</p>
-        </div>
-
-        <div className="faq-item">
-          <h4>Can I upgrade or downgrade later?</h4>
-          <p>Yes, you can change your plan anytime from your dashboard.</p>
-        </div>
-      </div>
+      </motion.div>
     </div>
   )
 }
