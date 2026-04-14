@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import * as THREE from 'three'
+import { movies } from '../data/prabhasData'
 import '../styles/pages/home.css'
 
 export default function Home() {
@@ -68,14 +70,15 @@ export default function Home() {
           <h2>PRABHAS</h2>
           <p>One of Indian Cinema's Biggest Superstars</p>
           <div className="cta-buttons">
-            <a href="/filmography" className="btn btn-primary">Explore Filmography</a>
-            <a href="/gallery" className="btn btn-secondary">3D Gallery</a>
+            <Link to="/watch" className="btn btn-watch-all">WATCH ALL MOVIES</Link>
+            <Link to="/filmography" className="btn btn-primary">EXPLORE FILMOGRAPHY</Link>
+            <Link to="/gallery" className="btn btn-primary">3D GALLERY</Link>
           </div>
         </div>
 
         <div className="highlights">
           <div className="highlight-card">
-            <h3>30+</h3>
+            <h3>{movies.length}+</h3>
             <p>Films</p>
           </div>
           <div className="highlight-card">
@@ -87,6 +90,31 @@ export default function Home() {
             <p>Awards</p>
           </div>
         </div>
+
+        <section className="featured-movies-section">
+          <div className="section-header">
+            <h2>Featured Blockbusters</h2>
+            <Link to="/filmography" className="view-all-link">View All Movies →</Link>
+          </div>
+          
+          <div className="movies-scroll-container">
+            {movies.filter(m => m.featured).map(movie => (
+              <div key={movie.id} className="featured-movie-card">
+                <div className="card-image-wrapper">
+                  <img src={movie.image} alt={movie.title} onError={(e) => e.target.src = 'https://via.placeholder.com/300x450?text=' + movie.title} />
+                  <div className="card-overlay">
+                    <div className="rating-tag">⭐ {movie.rating}</div>
+                    <div className="status-tag">{movie.status}</div>
+                  </div>
+                </div>
+                <div className="card-content">
+                  <h3>{movie.title}</h3>
+                  <p>{movie.year} • {movie.genre}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   )

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { movies } from '../data/prabhasData'
 import '../styles/pages/filmography.css'
 
@@ -11,8 +11,8 @@ export default function Filmography() {
   const [displayedMovies, setDisplayedMovies] = useState(movies)
 
   // Get unique genres and years for filter options
-  const genres = ['all', ...new Set(movies.map(m => m.genre))]
-  const years = ['all', ...new Set(movies.map(m => m.year)).sort((a, b) => b - a)]
+  const genres = useMemo(() => ['all', ...new Set((movies || []).map(m => m?.genre).filter(Boolean))], [])
+  const years = useMemo(() => ['all', ...new Set((movies || []).map(m => m?.year).filter(Boolean))].sort((a, b) => b - a), [])
 
   useEffect(() => {
     let filtered = [...movies]
@@ -22,9 +22,9 @@ export default function Filmography() {
       const searchLower = searchTerm.toLowerCase()
       filtered = filtered.filter(
         movie =>
-          movie.title.toLowerCase().includes(searchLower) ||
-          movie.description.toLowerCase().includes(searchLower) ||
-          movie.cast.some(actor => actor.toLowerCase().includes(searchLower))
+          (movie?.title?.toLowerCase() || '').includes(searchLower) ||
+          (movie?.description?.toLowerCase() || '').includes(searchLower) ||
+          (movie?.cast?.some(actor => actor?.toLowerCase()?.includes(searchLower)) || false)
       )
     }
 
@@ -52,8 +52,8 @@ export default function Filmography() {
   return (
     <div className="filmography">
       <div className="filmography-header">
-        <h1>Filmography</h1>
-        <p>Explore all of Prabhas' films</p>
+        <h1>All Movies</h1>
+        <p>Explore the complete collection of Prabhas' cinematic journey</p>
       </div>
 
       <div className="filmography-controls">
@@ -95,21 +95,38 @@ export default function Filmography() {
       </div>
 
       <div className="movies-grid">
-        {displayedMovies.map(movie => (
+        {(displayedMovies || []).map(movie => (
           <div 
-            key={movie.id} 
+            key={movie?.id} 
             className="movie-card"
             onClick={() => setSelectedMovie(movie)}
           >
             <div style={{ position: 'relative' }}>
-              <img src={movie.image} alt={movie.title} />
-              <div className="year-badge">{movie.year}</div>
+              <img src={movie?.image || '/placeholder-movie.jpg'} alt={movie?.title || 'Movie'} />
+              <div className="year-badge">{movie?.year || 'N/A'}</div>
             </div>
             <div className="movie-info">
-              <h3>{movie.title}</h3>
-              <p className="year">Year: {movie.year}</p>
+              <h3>{movie?.title || 'Untitled'}</h3>
+              <p className="year">Year: {movie?.year || 'N/A'}</p>
+              
+              <div className="card-financials">
+                <div className="fin-item">
+                  <span className="fin-label">Budget</span>
+                  <span className="fin-val">{movie.budget || 'N/A'}</span>
+                </div>
+                <div className="fin-item">
+                  <span className="fin-label">Gross</span>
+                  <span className="fin-val">{movie.collection || 'N/A'}</span>
+                </div>
+              </div>
+
               <div className="rating">
-                <span className="stars">⭐ {movie.rating}</span>
+                {movie?.status && (
+                  <div className={`status-badge status-${movie.status.toLowerCase().replace(/\s+/g, '-')}`}>
+                    {movie.status}
+                  </div>
+                )}
+                <span className="stars">⭐ {movie?.rating > 0 ? movie.rating : 'N/A'}</span>
               </div>
             </div>
           </div>
@@ -145,7 +162,7 @@ export default function Filmography() {
 
                 <div className="info-section">
                   <h4>Cast</h4>
-                  <p>{selectedMovie.cast.join(', ')}</p>
+                  <p>{selectedMovie?.cast?.join(', ') || 'N/A'}</p>
                 </div>
 
                 <div className="info-section">
@@ -153,9 +170,20 @@ export default function Filmography() {
                   <p>{selectedMovie.description}</p>
                 </div>
 
+                <div className="financial-grid">
+                  <div className="financial-item">
+                    <span className="financial-label">Budget</span>
+                    <span className="financial-value">{selectedMovie.budget || 'N/A'}</span>
+                  </div>
+                  <div className="financial-item">
+                    <span className="financial-label">Worldwide Collection</span>
+                    <span className="financial-value">{selectedMovie.collection || 'N/A'}</span>
+                  </div>
+                </div>
+
                 <div className="info-section">
                   <h4>Rating</h4>
-                  <p className="rating-badge">⭐ {selectedMovie.rating}/10</p>
+                  <p className="rating-badge">⭐ {selectedMovie.rating > 0 ? `${selectedMovie.rating}/10` : 'N/A'}</p>
                 </div>
 
                 <div className="trailer-section">
@@ -176,9 +204,9 @@ export default function Filmography() {
                 <div className="streaming-links">
                   <h4>Watch Full Movie (Legal Streaming with Quality Options)</h4>
                   <div className="links-list">
-                    {Object.entries(selectedMovie.streamingLinks).map(([platform, details]) => {
-                      const link = typeof details === 'string' ? details : details.url
-                      const quality = typeof details === 'object' ? details.quality : 'Available'
+                    {Object.entries(selectedMovie?.streamingLinks || {}).map(([platform, details]) => {
+                      const link = typeof details === 'string' ? details : details?.url
+                      const quality = typeof details === 'object' ? details?.quality : 'Available'
                       return (
                         <a 
                           key={platform} 

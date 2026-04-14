@@ -46,6 +46,24 @@ export default function Premium() {
     },
     {
       id: 3,
+      name: 'Elite',
+      price: 1000,
+      duration: '1 Month',
+      description: 'The ultimate streaming experience',
+      features: [
+        '✅ Everything in Premium',
+        '✅ 4K Ultra HD Streaming',
+        '✅ Ad-free Movie Viewing',
+        '✅ Priority link availability',
+        '✅ Exclusive Ultra-HD posters'
+      ],
+      color: '#ffffff',
+      cta: 'Get Elite Access',
+      recommended: false,
+      badge: 'Best for 4K'
+    },
+    {
+      id: 4,
       name: 'Annual Premium',
       price: 999,
       duration: '1 Year',

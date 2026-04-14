@@ -3,22 +3,27 @@
 ## Step 1: Prepare Your Project for Deployment
 
 ### 1.1 Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 1.2 Create .env.local file
+
 Copy `.env.example` to `.env.local` and add your Razorpay credentials:
+
 ```bash
 cp .env.example .env.local
 ```
 
 Add your credentials:
-```
+
+```bash
 VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
 ```
 
 ### 1.3 Build & Test Locally
+
 ```bash
 npm run build
 npm run preview
@@ -27,6 +32,7 @@ npm run preview
 ## Step 2: Setup Git Repository
 
 If not already done:
+
 ```bash
 git init
 git add .
@@ -40,19 +46,18 @@ git push -u origin main
 ### Option A: Deploy via Vercel CLI (Recommended)
 
 1. Install Vercel CLI:
+
 ```bash
 npm install -g vercel
 ```
 
 2. Deploy:
+
 ```bash
 vercel
 ```
 
-3. Follow the prompts:
-   - Link to repository: Yes
-   - Set as production: Yes
-   - Override settings: No
+3. Follow the prompts to link and deploy your project
 
 ### Option B: Deploy via Vercel Dashboard
 
@@ -61,9 +66,7 @@ vercel
 3. Click "Add New" → "Project"
 4. Select your repository
 5. Click "Import"
-6. Add environment variables:
-   - Name: `VITE_RAZORPAY_KEY_ID`
-   - Value: `your_key_id`
+6. Add environment variables before deploying
 7. Click "Deploy"
 
 ### Option C: Deploy via GitHub Integration
@@ -79,13 +82,16 @@ In Vercel Dashboard:
 
 1. Go to "Settings" → "Environment Variables"
 2. Add for Production:
-   ```
-   VITE_RAZORPAY_KEY_ID = your_production_key
-   ```
+
+```
+VITE_RAZORPAY_KEY_ID = your_production_key
+```
+
 3. Add for Preview/Development:
-   ```
-   VITE_RAZORPAY_KEY_ID = your_test_key
-   ```
+
+```
+VITE_RAZORPAY_KEY_ID = your_test_key
+```
 
 ## Step 5: Verify Deployment
 
@@ -106,12 +112,14 @@ In Vercel Dashboard:
 
 ## Step 7: Monitor Performance
 
-### Setup Vercel Analytics:
+### Setup Vercel Analytics
+
 1. Settings → Analytics
 2. Enable Web Analytics
 3. Monitor page performance
 
-### Monitor Errors:
+### Monitor Errors
+
 1. Settings → Error Tracking
 2. Set up error notifications
 3. Monitor API endpoints
@@ -119,36 +127,43 @@ In Vercel Dashboard:
 ## Troubleshooting
 
 ### Build Fails
+
 - Check Node.js version: `node --version` (need 18+)
 - Clear cache: `npm cache clean --force`
 - Reinstall: `rm -rf node_modules && npm install`
 
 ### Images Not Loading
+
 - Verify image URLs are accessible
 - Check Vercel logs for 404 errors
-- May need to configure image optimization in `next.config.js` if using Next.js
+- May need to configure image optimization
 
 ### Payment Gateway Not Working
+
 - Verify Razorpay keys in environment variables
 - Check Razorpay dashboard for API limits
 - Test with Razorpay test credentials first
 
 ### Slow Build Times
+
 - Optimize bundle with `vite build --minify`
 - Use Vercel's caching strategies
 - Consider splitting large components
 
 ## Performance Optimization
 
-### Before Deployment:
+### Before Deployment
+
 ```bash
 npm run build
 # Check dist folder size
 ls -lh dist/
 ```
 
-### Vite Config Optimization:
+### Vite Config Optimization
+
 Consider adding to `vite.config.js`:
+
 ```javascript
 export default {
   build: {
@@ -160,15 +175,16 @@ export default {
 
 ## Security Checklist
 
-- [ ] Never commit `.env` files
-- [ ] Rotate Razorpay keys periodically
-- [ ] Use HTTPS only (automatic on Vercel)
-- [ ] Keep dependencies updated: `npm update`
-- [ ] Run security audit: `npm audit`
+- Never commit `.env` files
+- Rotate Razorpay keys periodically
+- Use HTTPS only (automatic on Vercel)
+- Keep dependencies updated: `npm update`
+- Run security audit: `npm audit`
 
 ## Rollback Instructions
 
 If deployment fails:
+
 ```bash
 # View deployment history
 vercel list

@@ -26,7 +26,8 @@ export default function Header() {
         
         <nav className={`nav ${menuOpen ? 'active' : ''}`}>
           <Link to="/" className="nav-link">Home</Link>
-          <Link to="/filmography" className="nav-link">Filmography</Link>
+          <Link to="/watch" className="nav-link watch-link">Watch All</Link>
+          <Link to="/filmography" className="nav-link">Movies</Link>
           <Link to="/biography" className="nav-link">Biography</Link>
           <Link to="/gallery" className="nav-link">3D Gallery</Link>
           <Link to="/news" className="nav-link">News</Link>

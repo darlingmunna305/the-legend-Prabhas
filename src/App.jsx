@@ -13,12 +13,14 @@ import Signup from './pages/Signup'
 import Premium from './pages/Premium'
 import Dashboard from './pages/Dashboard'
 import Checkout from './pages/Checkout'
+import Watch from './pages/Watch'
 import { AuthProvider } from './context/AuthContext'
 import './App.css'
 import './styles/pages/auth.css'
 import './styles/pages/premium.css'
 import './styles/pages/dashboard.css'
 import './styles/pages/checkout.css'
+import './styles/pages/watch.css'
 
 export default function App() {
   return (
@@ -39,6 +41,7 @@ export default function App() {
               <Route path="/premium" element={<Premium />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/checkout/:planId" element={<Checkout />} />
+              <Route path="/watch" element={<Watch />} />
             </Routes>
           </main>
           <Footer />
