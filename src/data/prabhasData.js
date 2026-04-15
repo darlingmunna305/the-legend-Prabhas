@@ -543,8 +543,37 @@ export const news = [
     id: 1,
     title: "Kalki 2898 AD Crosses Massive Milestone",
     date: "2024-04-10",
-    content: "The sci-fi epic Kalki 2898 AD continues its dominant run.",
+    source: "Times of India",
+    content: "The sci-fi epic Kalki 2898 AD continues its dominant run at the box office, crossing ₹1,100 crore worldwide. Prabhas' portrayal of Bhairava has been universally praised by fans and critics alike.",
     image: "https://via.placeholder.com/400x300?text=Kalki+News"
+  },
+  {
+    id: 2,
+    title: "Salaar: Part 2 Shooting Wraps Up",
+    date: "2025-08-15",
+    source: "Hindustan Times",
+    content: "Director Prashanth Neel confirms that the shooting for Salaar: Part 2 – Shouryaanga Parvam has been completed. The film is currently in post-production and is expected to release in 2028."
+  },
+  {
+    id: 3,
+    title: "Prabhas Wins Fan Choice Award 2025",
+    date: "2025-12-20",
+    source: "India Today",
+    content: "Prabhas has been voted as the most popular Pan-India actor for the third consecutive year at the Annual Fan Choice Awards ceremony held in Mumbai."
+  },
+  {
+    id: 4,
+    title: "Spirit First Look Revealed",
+    date: "2026-01-10",
+    source: "Film Companion",
+    content: "Sandeep Reddy Vanga unveils the intense first look of Prabhas from 'Spirit', showing the actor in a rugged police officer avatar. Fans have flooded social media with excitement."
+  },
+  {
+    id: 5,
+    title: "The Raja Saab Sets New Release Records",
+    date: "2026-04-10",
+    source: "Deccan Chronicle",
+    content: "Despite mixed reviews, The Raja Saab opened to record-breaking advance bookings in multiple territories. The horror-comedy marks Prabhas' first collaboration with director Maruthi."
   }
 ];
 
@@ -552,7 +581,41 @@ export const reviews = [
   {
     id: 1,
     userName: "Rahul K.",
+    movie: "Baahubali 2: The Conclusion",
     rating: 5,
-    review: "Prabhas is the biggest superstar in India right now!"
+    comment: "Prabhas is the biggest superstar in India right now! Baahubali 2 is a masterpiece that redefined Indian cinema.",
+    date: "2024-06-15"
+  },
+  {
+    id: 2,
+    userName: "Priya M.",
+    movie: "Kalki 2898 AD",
+    rating: 4,
+    comment: "Incredible visual effects and Prabhas nails the role of Bhairava. The dystopian setting is breathtaking!",
+    date: "2024-08-20"
+  },
+  {
+    id: 3,
+    userName: "Arun S.",
+    movie: "Mirchi",
+    rating: 5,
+    comment: "Mirchi remains one of Prabhas' finest performances. The combination of action and emotion is perfect.",
+    date: "2024-09-05"
+  },
+  {
+    id: 4,
+    userName: "Sneha R.",
+    movie: "Salaar: Ceasefire",
+    rating: 4,
+    comment: "Prabhas and Prashanth Neel are a deadly combo. The raw intensity in every scene is unmatched!",
+    date: "2024-11-12"
+  },
+  {
+    id: 5,
+    userName: "Vikram T.",
+    movie: "Chatrapathi",
+    rating: 5,
+    comment: "Chatrapathi showed the world what Prabhas is capable of. The emotional depth combined with powerful action sequences makes this a timeless classic.",
+    date: "2025-01-30"
   }
 ];

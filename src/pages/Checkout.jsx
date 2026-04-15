@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/pages/checkout.css'
 
@@ -24,54 +24,50 @@ export default function Checkout() {
   }
 
   if (!isAuthenticated) {
-    navigate('/login')
-    return null
+    return <Navigate to="/login" replace />
   }
 
   const plan = plans[planId]
 
   if (!plan) {
-    navigate('/premium')
-    return null
+    return <Navigate to="/premium" replace />
   }
 
   const handlePayment = async () => {
     setLoading(true)
 
     try {
-      // Simulate payment processing
-      const paymentId = 'PAY_' + Date.now()
+      const { createOrder, handleRazorpayPayment } = await import('../services/razorpayService')
       
-      // In real implementation, this would call Razorpay API
-      console.log('Processing payment:', {
-        plan: plan.name,
-        amount: plan.price,
-        paymentId
-      })
+      const order = await createOrder(plan.price, plan.name.toLowerCase())
+      
+      if (order && order.success) {
+        const paymentSuccess = await handleRazorpayPayment(
+          order,
+          user.email,
+          user.user_metadata?.full_name || user.email,
+          user.id,
+          plan.name.toLowerCase()
+        )
 
-      // Simulate 2 second payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000))
+        if (paymentSuccess) {
+          // Sync with profile
+          await upgradeToPremium(plan.name.toLowerCase(), order.orderId)
+          
+          setOrderDetails({
+            paymentId: order.orderId,
+            status: 'success',
+            amount: plan.price,
+            planName: plan.name
+          })
 
-      // Upgrade user to premium
-      const success = upgradeToPremium(plan.name.toLowerCase(), paymentId)
-
-      if (success) {
-        setOrderDetails({
-          paymentId,
-          status: 'success',
-          amount: plan.price,
-          planName: plan.name
-        })
-
-        // Redirect to dashboard after 3 seconds
-        setTimeout(() => {
-          navigate('/dashboard')
-        }, 3000)
-      } else {
-        alert('Payment failed. Please try again.')
+          setTimeout(() => {
+            navigate('/dashboard')
+          }, 3000)
+        }
       }
     } catch (error) {
-      alert('Error processing payment: ' + error.message)
+      alert('Error processing payment: ' + (error.message || 'Payment failed'))
     } finally {
       setLoading(false)
     }
@@ -84,7 +80,7 @@ export default function Checkout() {
           <div className="success-message">
             <div className="success-icon">✓</div>
             <h2>Payment Successful!</h2>
-            <p>Welcome to Premium, {user?.name}!</p>
+            <p>Welcome to Premium, {user?.full_name || user?.user_metadata?.full_name || user?.email}!</p>
             <div className="order-info">
               <p><strong>Order ID:</strong> {orderDetails.paymentId}</p>
               <p><strong>Plan:</strong> {orderDetails.planName}</p>
@@ -116,7 +112,7 @@ export default function Checkout() {
             <div className="customer-info">
               <h3>Customer Information</h3>
               <div className="info-display">
-                <p><strong>Name:</strong> {user?.name}</p>
+                <p><strong>Name:</strong> {user?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0]}</p>
                 <p><strong>Email:</strong> {user?.email}</p>
               </div>
             </div>

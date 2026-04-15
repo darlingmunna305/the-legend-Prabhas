@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { motion } from 'framer-motion'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/pages/auth.css'
 
@@ -13,11 +13,10 @@ export default function Login() {
   const { login, isAuthenticated } = useContext(AuthContext)
 
   if (isAuthenticated) {
-    navigate('/dashboard')
-    return null
+    return <Navigate to="/dashboard" replace />
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
@@ -28,11 +27,11 @@ export default function Login() {
       return
     }
 
-    const success = login(email, password)
-    if (success) {
+    const response = await login(email, password)
+    if (response.success) {
       navigate('/dashboard')
     } else {
-      setError('Invalid credentials. Please try again.')
+      setError(response.error || 'Invalid credentials. Please try again.')
     }
     setLoading(false)
   }

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/pages/auth.css'
 
@@ -14,11 +14,10 @@ export default function Signup() {
   const { signup, isAuthenticated } = useContext(AuthContext)
 
   if (isAuthenticated) {
-    navigate('/dashboard')
-    return null
+    return <Navigate to="/dashboard" replace />
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     setLoading(true)
@@ -47,11 +46,11 @@ export default function Signup() {
       return
     }
 
-    const success = signup(email, password, name)
-    if (success) {
+    const response = await signup(email, password, name)
+    if (response.success) {
       navigate('/dashboard')
     } else {
-      setError('Signup failed. Please try again.')
+      setError(response.error || 'Signup failed. Please try again.')
     }
     setLoading(false)
   }

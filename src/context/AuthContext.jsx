@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { supabase } from '../services/supabaseClient'
 
 export const AuthContext = createContext()
 
@@ -7,76 +8,140 @@ export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  // Load user from localStorage on mount
   useEffect(() => {
-    const savedUser = localStorage.getItem('prabhasUser')
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
-      setIsAuthenticated(true)
+    // Check active sessions and sets the user
+    const checkUser = async () => {
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (session) {
+        setUser(session.user)
+        setIsAuthenticated(true)
+        // Fetch additional profile data (like subscription) if needed
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .single()
+        
+        if (profile) {
+          setUser({ ...session.user, ...profile })
+        }
+      }
+      setLoading(false)
     }
-    setLoading(false)
+
+    checkUser()
+
+    // Listen for changes on auth state (logged in, signed out, etc.)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (session) {
+        setUser(session.user)
+        setIsAuthenticated(true)
+        
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', session.user.id)
+          .single()
+          
+        if (profile) {
+          setUser({ ...session.user, ...profile })
+        }
+      } else {
+        setUser(null)
+        setIsAuthenticated(false)
+      }
+      setLoading(false)
+    })
+
+    return () => subscription.unsubscribe()
   }, [])
 
-  const login = (email, password) => {
-    // For demo purposes - simple validation
-    if (email && password) {
-      const newUser = {
-        id: Date.now(),
+  const login = async (email, password) => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        name: email.split('@')[0],
-        subscription: 'free',
-        joinDate: new Date().toISOString(),
-        isPremium: false,
-        expiryDate: null
-      }
-      setUser(newUser)
-      setIsAuthenticated(true)
-      localStorage.setItem('prabhasUser', JSON.stringify(newUser))
-      return true
+        password,
+      })
+      if (error) throw error
+      return { success: true }
+    } catch (error) {
+      console.error('Login error:', error.message)
+      return { success: false, error: error.message }
+    } finally {
+      setLoading(false)
     }
-    return false
   }
 
-  const signup = (email, password, name) => {
-    // For demo purposes
-    if (email && password && name) {
-      const newUser = {
-        id: Date.now(),
+  const signup = async (email, password, name) => {
+    try {
+      setLoading(true)
+      const { data, error } = await supabase.auth.signUp({
         email,
-        name,
-        subscription: 'free',
-        joinDate: new Date().toISOString(),
-        isPremium: false,
-        expiryDate: null
+        password,
+        options: {
+          data: {
+            full_name: name,
+          }
+        }
+      })
+      if (error) throw error
+      
+      // Create a profile record in the profiles table
+      if (data.user) {
+        await supabase.from('profiles').insert([
+          { 
+            id: data.user.id, 
+            full_name: name, 
+            subscription: 'free',
+            isPremium: false 
+          }
+        ])
       }
-      setUser(newUser)
-      setIsAuthenticated(true)
-      localStorage.setItem('prabhasUser', JSON.stringify(newUser))
-      return true
+      
+      return { success: true }
+    } catch (error) {
+      console.error('Signup error:', error.message)
+      return { success: false, error: error.message }
+    } finally {
+      setLoading(false)
     }
-    return false
   }
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut()
     setUser(null)
     setIsAuthenticated(false)
-    localStorage.removeItem('prabhasUser')
   }
 
-  const upgradeToPremium = (planType, paymentId) => {
+  const upgradeToPremium = async (planType, paymentId) => {
     if (user) {
       const expiryDate = new Date()
       expiryDate.setMonth(expiryDate.getMonth() + 1)
       
-      const updatedUser = {
+      const { error } = await supabase
+        .from('profiles')
+        .update({
+          subscription: planType,
+          isPremium: true,
+          expiry_date: expiryDate.toISOString(),
+          last_payment_id: paymentId
+        })
+        .eq('id', user.id)
+
+      if (error) {
+        console.error('Upgrade error:', error.message)
+        return false
+      }
+
+      // Update local state
+      setUser({
         ...user,
         subscription: planType,
         isPremium: true,
-        expiryDate: expiryDate.toISOString(),
-        paymentId
-      }
-      setUser(updatedUser)
-      localStorage.setItem('prabhasUser', JSON.stringify(updatedUser))
+        expiry_date: expiryDate.toISOString()
+      })
       return true
     }
     return false

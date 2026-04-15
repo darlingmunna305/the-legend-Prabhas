@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import '../styles/pages/dashboard.css'
 
@@ -8,14 +8,18 @@ export default function Dashboard() {
   const { user, isAuthenticated, logout } = useContext(AuthContext)
 
   if (!isAuthenticated) {
-    navigate('/login')
-    return null
+    return <Navigate to="/login" replace />
   }
 
-  const handleLogout = () => {
-    logout()
+  const handleLogout = async () => {
+    await logout()
     navigate('/')
   }
+
+  // Helper to get display name from Supabase user or profile
+  const displayName = user?.full_name || user?.user_metadata?.full_name || user?.email?.split('@')[0] || 'Fan'
+  const memberSince = user?.created_at || user?.joinDate || new Date().toISOString()
+  const expiryDate = user?.expiry_date || user?.expiryDate
 
   const handleUpgrade = () => {
     navigate('/premium')
@@ -33,7 +37,7 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <div className="dashboard">
         <div className="dashboard-header">
-          <h1>Welcome, {user?.name}! 👋</h1>
+          <h1>Welcome, {displayName}! 👋</h1>
           <p className="subtitle">Manage your account and subscription</p>
         </div>
 
@@ -43,7 +47,7 @@ export default function Dashboard() {
             <h2>Account Information</h2>
             <div className="info-group">
               <label>Full Name</label>
-              <p>{user?.name}</p>
+              <p>{displayName}</p>
             </div>
             <div className="info-group">
               <label>Email</label>
@@ -51,7 +55,7 @@ export default function Dashboard() {
             </div>
             <div className="info-group">
               <label>Member Since</label>
-              <p>{formatDate(user?.joinDate)}</p>
+              <p>{formatDate(memberSince)}</p>
             </div>
             <button className="btn-secondary">Edit Profile</button>
           </div>
@@ -74,7 +78,7 @@ export default function Dashboard() {
                 </div>
                 <div className="info-group">
                   <label>Expires On</label>
-                  <p>{formatDate(user?.expiryDate)}</p>
+                  <p>{formatDate(expiryDate)}</p>
                 </div>
                 <div className="info-group">
                   <label>Status</label>

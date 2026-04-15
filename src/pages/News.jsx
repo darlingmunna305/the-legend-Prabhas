@@ -37,7 +37,6 @@ export default function News() {
             {expandedNews === newsItem.id && (
               <div className="news-content">
                 <p>{newsItem.content}</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
               </div>
             )}
 

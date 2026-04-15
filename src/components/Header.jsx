@@ -79,7 +79,7 @@ export default function Header() {
               animate={{ opacity: 1, scale: 1 }}
             >
               <Link to="/dashboard" className="nav-link" onClick={() => setMenuOpen(false)}>
-                {user.name}
+                {user.full_name || user.user_metadata?.full_name || user.email?.split('@')[0]}
               </Link>
               <button className="nav-link logout-btn" onClick={handleLogout}>
                 Logout

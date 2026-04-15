@@ -153,7 +153,7 @@ function AppContent() {
 }
 
 export default function App() {
-  const GA_TRACKING_ID = 'G-XXXXXXXXXX' // Replace with your actual Google Analytics ID
+  const GA_TRACKING_ID = import.meta.env.VITE_GA_TRACKING_ID || 'G-XXXXXXXXXX'
 
   return (
     <Router>

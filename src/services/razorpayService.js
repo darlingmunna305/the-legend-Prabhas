@@ -42,7 +42,7 @@ export const createOrder = async (amount, plan) => {
   }
 }
 
-export const handleRazorpayPayment = async (orderData, userEmail, userName) => {
+export const handleRazorpayPayment = async (orderData, userEmail, userName, userId, plan) => {
   const scriptLoaded = await loadRazorpayScript()
   if (!scriptLoaded) {
     alert('Failed to load Razorpay. Please try again.')
@@ -69,12 +69,14 @@ export const handleRazorpayPayment = async (orderData, userEmail, userName) => {
             razorpay_order_id: response.razorpay_order_id,
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
+            userId: userId,
+            planType: plan
           }),
         })
 
         const verifyData = await verifyResponse.json()
         if (verifyData.success) {
-          // Store subscription info in localStorage
+          // Store subscription info in localStorage as backup
           const subscriptionData = {
             isPremium: true,
             paymentId: response.razorpay_payment_id,

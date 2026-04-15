@@ -26,9 +26,9 @@ export default function Footer() {
         <div className="footer-section">
           <h3>Legal Streaming</h3>
           <ul>
-            <li><a href="https://www.primevideo.com" target="_blank" rel="noopener noreferrer">Amazon Prime Video</a></li>
+            <li><a href="https://www.primevideo.com" target="_blank" rel="noopener noreferrer">Prime Video</a></li>
             <li><a href="https://www.netflix.com" target="_blank" rel="noopener noreferrer">Netflix</a></li>
-            <li><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">YouTube</a></li>
+            <li><a href="https://www.youtube.com/@Prabhas" target="_blank" rel="noopener noreferrer">YouTube</a></li>
           </ul>
         </div>
 
